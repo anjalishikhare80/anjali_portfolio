@@ -30,7 +30,14 @@ app.get('*', (req, res) => {
 });
 
 // ─── Start ──────────────────────────────────
-app.listen(PORT, () => {
-  console.log(`🚀 Server running at http://localhost:${PORT}`);
-  console.log(`📬 Contact form ready — emails will be sent to ${process.env.EMAIL_TO}`);
-});
+// Vercel imports this file and calls the exported Express app directly as a
+// serverless function — it does not need (or want) a listening port.
+// Locally (npm start / npm run dev) we still want an actual HTTP server.
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running at http://localhost:${PORT}`);
+    console.log(`📬 Contact form ready — emails will be sent to ${process.env.EMAIL_TO}`);
+  });
+}
+
+module.exports = app;
