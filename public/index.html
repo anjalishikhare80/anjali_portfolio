@@ -105,13 +105,22 @@
   }
 
   .loader-content {
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 90vw;
+    padding: 0 1rem;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    text-align: center;
     gap: 1.1rem;
   }
+
   .loader-mark-wrap {
     position: relative;
     width: 68px; height: 68px;
@@ -134,7 +143,7 @@
   }
   @keyframes loaderSpin { to { transform: rotate(360deg); } }
 
-  .loader-name {
+ .loader-name {
     font-family: var(--font-head);
     font-size: clamp(2rem, 6vw, 4rem);
     font-weight: 700;
@@ -143,6 +152,8 @@
     opacity: 0;
     transform: translateY(30px);
     animation: loaderName .8s ease .3s forwards;
+    white-space: normal;
+    word-break: break-word;
   }
   .loader-role {
     font-size: clamp(.85rem, 2vw, 1rem);
@@ -989,7 +1000,7 @@
   }
 
 
-  @media (max-width: 480px) {
+@media (max-width: 480px) {
   #loader {
     width: 100%;
     padding: 0 1.25rem;
