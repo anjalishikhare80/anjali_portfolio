@@ -27,6 +27,10 @@
   
   <!-- Custom Editorial Stylesheet -->
   <link rel="stylesheet" href="css/style.css"/>
+  <!-- Atmosphere Day/Night Layer -->
+  <link rel="stylesheet" href="css/atmosphere.css"/>
+  <!-- Responsive Enhancements -->
+  <link rel="stylesheet" href="css/responsive.css"/>
 </head>
 <body>
 
@@ -77,6 +81,11 @@
 
       <!-- Action & Mobile Toggle -->
       <div class="nav-actions">
+        <!-- Day / Night Theme Toggle -->
+        <button class="btn-theme-toggle" id="themeToggleBtn" aria-label="Toggle day and night theme" title="Toggle theme">
+          <i class="fas fa-sun icon-sun" aria-hidden="true"></i>
+          <i class="fas fa-moon icon-moon" aria-hidden="true"></i>
+        </button>
         <a href="Anjali_Shikhare_Resume.pdf" class="btn-nav-resume" download="Anjali_Shikhare_Resume.pdf" target="_blank" rel="noopener noreferrer">
           <span>Resume</span>
           <i class="fas fa-arrow-up-right-from-square"></i>
@@ -114,6 +123,9 @@
   =================================================================== -->
   <!-- ═══════ HERO / HOME ═══════ -->
 <section id="home" class="hero-editorial">
+
+  <!-- ═══ ATMOSPHERE BACKGROUND LAYER (z-index: 0, pointer-events: none) ═══ -->
+  <div id="atmosphere-bg" aria-hidden="true"></div>
 
   <!-- Docked Left Social Media Rail (Fixed on Desktop) -->
   <aside class="hero-social-rail" aria-label="Social connections">
@@ -1546,6 +1558,7 @@
   <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script src="js/atmosphere.js" defer></script>
   <script src="js/main.js"></script>
 </body>
 </html>
