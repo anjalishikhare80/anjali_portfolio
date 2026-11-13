@@ -1,7 +1,6 @@
 
 /* ══════════════════════════════════════════════════════════════════════════
    RESPONSIVE ENHANCEMENTS + ADDITIONAL DARK MODE OVERRIDES
-   Added to complement style.css responsive breakpoints
    ══════════════════════════════════════════════════════════════════════════ */
 
 /* ─── TABLET: 768px ─────────────────────────────────────────────────────── */
@@ -40,7 +39,6 @@
     margin: 0 auto;
   }
 
-  /* Name sizes (clamp already handles most; extra safety) */
   .name-first { font-size: clamp(2.8rem, 11vw, 3.8rem); }
   .name-last  { font-size: clamp(2.1rem, 8vw, 2.8rem); }
 
@@ -56,6 +54,7 @@
   /* About */
   .about-narrative-card { padding: 1.5rem; }
   .about-attributes-wrap { padding: 1.25rem; }
+
   .attr-grid {
     grid-template-columns: 1fr 1fr;
   }
@@ -63,30 +62,56 @@
   /* Skills */
   .skill-group-card { padding: 1.5rem; }
 
-  /* Projects master-detail: stack on mobile */
+  /* ══════════════════════════════════════════════════════════════════════
+     PROJECTS: MOBILE RESPONSIVE FIX
+     ══════════════════════════════════════════════════════════════════════ */
+
+  #projects .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   .project-selector-rail {
     display: flex;
-    flex-direction: row;
-    overflow-x: auto;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
     gap: 0.75rem;
-    padding: 1rem;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
+    padding: 0.5rem 0;
+    box-sizing: border-box;
   }
 
   .project-nav-tab {
-    flex-shrink: 0;
-    width: 220px;
-    scroll-snap-align: start;
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
     text-align: left;
   }
 
-  .tab-excerpt { display: none; }
+  .tab-excerpt {
+    display: none;
+  }
+
+  .project-stage-viewport,
+  .project-stage-panel,
+  .stage-frame {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
 
   .project-stage-viewport {
     min-height: auto;
     margin-top: 1rem;
+  }
+
+  .stage-frame {
+    overflow: hidden;
   }
 
   .stage-frame-header {
@@ -95,17 +120,58 @@
   }
 
   .frame-url-bar {
-    flex: 1;
+    flex: 1 1 100%;
     min-width: 0;
+    max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 0.7rem;
   }
 
-  .stage-screenshot-wrap { max-height: 220px; }
+  .stage-content {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
 
-  .stage-specs-grid { grid-template-columns: 1fr; }
+  .stage-title {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  .stage-screenshot-wrap {
+    width: 100%;
+    max-width: 100%;
+    max-height: 220px;
+    overflow: hidden;
+  }
+
+  .stage-img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .stage-specs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stage-tech-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .pill-chip {
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
 
   .stage-footer {
     flex-direction: column;
@@ -113,13 +179,19 @@
     align-items: flex-start;
   }
 
-  .stage-actions { width: 100%; }
-  .btn-stage-primary { width: 100%; justify-content: center; }
+  .stage-actions {
+    width: 100%;
+  }
+
+  .btn-stage-primary {
+    width: 100%;
+    justify-content: center;
+  }
 
   /* Analytics mini cards */
   .analytics-mini-card { padding: 1rem; }
 
-  /* Certificates */
+  /* Certificates - original styles preserved */
   .cert-filters {
     overflow-x: auto;
     flex-wrap: nowrap;
@@ -127,6 +199,7 @@
     padding-bottom: 0.5rem;
     scrollbar-width: none;
   }
+
   .cert-filters::-webkit-scrollbar { display: none; }
   .cert-filter-btn { flex-shrink: 0; min-height: 36px; }
 
@@ -137,15 +210,21 @@
   }
 
   .coords-list { gap: 0.75rem; }
-
   .coord-item { flex-wrap: wrap; }
-
   .contact-social-links { flex-wrap: wrap; }
 
   /* Footer */
-  .footer-top-row { flex-direction: column; align-items: flex-start; }
+  .footer-top-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .footer-nav-links { gap: 0.75rem; }
-  .footer-bottom-row { flex-direction: column; align-items: flex-start; }
+
+  .footer-bottom-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
   /* Modal */
   .cert-modal-box {
@@ -177,12 +256,13 @@
   .name-last  { font-size: 2rem; }
 
   .hero-status-pill { font-size: 0.65rem; }
-
   .hero-statement { font-size: 1rem; }
 
   .section-editorial { padding: 55px 0; }
 
-  .section-title { font-size: clamp(1.8rem, 7vw, 2.4rem); }
+  .section-title {
+    font-size: clamp(1.8rem, 7vw, 2.4rem);
+  }
 
   .attr-grid { grid-template-columns: 1fr; }
 
@@ -195,10 +275,22 @@
 
   .proof-number { font-size: 1.7rem; }
 
-  .project-nav-tab { width: 190px; }
+  /* Projects: small mobile */
+  .project-nav-tab {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .stage-title {
+    font-size: 1.35rem;
+  }
 
   .stage-tech-pills { gap: 0.4rem; }
-  .pill-chip { font-size: 0.7rem; padding: 0.25rem 0.55rem; }
+
+  .pill-chip {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.55rem;
+  }
 
   .tab-stack-preview span { font-size: 0.65rem; }
 
@@ -225,17 +317,21 @@
 }
 
 /* ─── PREVENT HORIZONTAL OVERFLOW ───────────────────────────────────────── */
-html, body {
+html,
+body {
   max-width: 100%;
   overflow-x: hidden;
 }
 
-img, video, iframe {
+img,
+video,
+iframe {
   max-width: 100%;
 }
 
 /* ─── TOUCH-FRIENDLY TARGETS ─────────────────────────────────────────────── */
 @media (pointer: coarse) {
+
   .cert-filter-btn,
   .project-nav-tab,
   .pill-link,
@@ -328,6 +424,7 @@ body.dark-mode .visual-badge {
   color: var(--accent);
   border-color: var(--accent-border);
 }
+
 body.dark-mode .visual-badge-alt {
   background-color: var(--bg-elevated);
   color: var(--text-muted);
