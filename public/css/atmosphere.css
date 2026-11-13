@@ -1,0 +1,602 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   ANJALI SHIKHARE — ATMOSPHERE LAYER
+   Theme: Light / Dark Mode Switcher + Subtle Animated Background
+   NOTE: Sun and moon are NAV ICONS only. No celestial objects in background.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ─── DARK MODE DESIGN TOKENS ────────────────────────────────────────────── */
+body.dark-mode {
+  --bg:              #0D1117;
+  --bg-alt:          #161B22;
+  --bg-card:         #1C2128;
+  --bg-elevated:     #21262D;
+  --text:            #E6EDF3;
+  --text-muted:      #8B949E;
+  --text-light:      #6E7681;
+  --text-subtle:     #484F58;
+  --accent:          #5B9BD5;
+  --accent-hover:    #79B4E8;
+  --accent-subtle:   rgba(91, 155, 213, 0.12);
+  --accent-border:   rgba(91, 155, 213, 0.28);
+  --accent-gold:     #E3B341;
+  --accent-gold-bg:  rgba(227, 179, 65, 0.12);
+  --border:          #30363D;
+  --border-subtle:   #21262D;
+  --border-dark:     #484F58;
+  --shadow-subtle:   0 2px 10px rgba(0, 0, 0, 0.35);
+  --shadow-card:     0 4px 24px rgba(0, 0, 0, 0.45);
+  --shadow-hover:    0 8px 32px rgba(0, 0, 0, 0.60);
+}
+
+/* ─── BODY TRANSITION ────────────────────────────────────────────────────── */
+body {
+  transition:
+    background-color 0.65s ease,
+    color 0.4s ease;
+}
+
+/* ─── ATMOSPHERE BACKGROUND WRAPPER ─────────────────────────────────────── */
+#atmosphere-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* ─── GRADIENT BACKDROPS ─────────────────────────────────────────────────── */
+.atm-grad-light {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 65% 55% at 18% 12%, rgba(255, 240, 200, 0.38) 0%, transparent 68%),
+    radial-gradient(ellipse 55% 48% at 82% 88%, rgba(230, 218, 195, 0.25) 0%, transparent 60%);
+  opacity: 1;
+  transition: opacity 0.65s ease;
+}
+
+.atm-grad-dark {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 78% 10%, rgba(25, 45, 90, 0.50) 0%, transparent 68%),
+    radial-gradient(ellipse 70% 60% at 12% 92%, rgba(8, 15, 40, 0.55) 0%, transparent 62%),
+    linear-gradient(170deg, #0D1117 0%, #111827 55%, #0A0F1A 100%);
+  opacity: 0;
+  transition: opacity 0.65s ease;
+}
+
+body.dark-mode .atm-grad-light { opacity: 0; }
+body.dark-mode .atm-grad-dark  { opacity: 1; }
+
+/* ─── FLOATING ORBS (both modes) ─────────────────────────────────────────── */
+.atm-orbs { position: absolute; inset: 0; }
+
+.atm-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  animation: orbDrift var(--d, 24s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  transition: opacity 0.65s ease, background-color 0.65s ease;
+}
+
+/* Light orbs */
+.atm-orb-l1 {
+  width: 380px; height: 380px;
+  top: 60%; left: -6%;
+  background: rgba(220, 198, 150, 0.08);
+  --d: 28s;
+}
+.atm-orb-l2 {
+  width: 300px; height: 300px;
+  top: 8%; right: -5%;
+  background: rgba(190, 212, 240, 0.07);
+  --d: 34s; --delay: -11s;
+}
+.atm-orb-l3 {
+  width: 240px; height: 240px;
+  top: 40%; left: 48%;
+  background: rgba(240, 218, 165, 0.06);
+  --d: 21s; --delay: -6s;
+}
+
+/* Dark orbs — same positions, different tones */
+.atm-orb-d1 {
+  width: 420px; height: 420px;
+  top: 58%; left: -8%;
+  background: rgba(28, 55, 120, 0.11);
+  --d: 30s; --delay: -9s;
+}
+.atm-orb-d2 {
+  width: 320px; height: 320px;
+  top: 6%; right: -7%;
+  background: rgba(18, 38, 95, 0.09);
+  --d: 26s;
+}
+.atm-orb-d3 {
+  width: 260px; height: 260px;
+  top: 42%; left: 50%;
+  background: rgba(35, 68, 148, 0.08);
+  --d: 19s; --delay: -13s;
+}
+
+/* Visibility: light orbs visible in light mode, hidden in dark mode (and vice-versa) */
+.atm-orb-l1, .atm-orb-l2, .atm-orb-l3 { opacity: 1; }
+.atm-orb-d1, .atm-orb-d2, .atm-orb-d3 { opacity: 0; }
+
+body.dark-mode .atm-orb-l1,
+body.dark-mode .atm-orb-l2,
+body.dark-mode .atm-orb-l3 { opacity: 0; }
+
+body.dark-mode .atm-orb-d1,
+body.dark-mode .atm-orb-d2,
+body.dark-mode .atm-orb-d3 { opacity: 1; }
+
+@keyframes orbDrift {
+  0%, 100% { transform: translate(0, 0); }
+  33%       { transform: translate(26px, -18px); }
+  66%       { transform: translate(-16px, 14px); }
+}
+
+/* ─── FLOATING PARTICLES ─────────────────────────────────────────────────── */
+.atm-particles { position: absolute; inset: 0; }
+
+.atm-particle {
+  position: absolute;
+  border-radius: 50%;
+  animation:
+    pFloat var(--pf, 12s) ease-in-out infinite,
+    pDrift var(--pd, 30s) linear infinite;
+  animation-delay: var(--pa, 0s);
+  transition: opacity 0.65s ease;
+}
+
+/* Light mode particles: warm dust */
+.atm-particle.light-p {
+  background: rgba(195, 175, 135, 0.45);
+  opacity: 1;
+}
+/* Dark mode particles: cool muted glow */
+.atm-particle.dark-p {
+  background: rgba(130, 170, 220, 0.30);
+  opacity: 0;
+}
+
+body.dark-mode .atm-particle.light-p { opacity: 0; }
+body.dark-mode .atm-particle.dark-p  { opacity: 1; }
+
+@keyframes pFloat {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%       { transform: translateY(-16px) scale(1.1); }
+}
+@keyframes pDrift {
+  from { transform: translateX(0); }
+  to   { transform: translateX(50px); }
+}
+
+/* ─── THEME TOGGLE BUTTON ─────────────────────────────────────────────────── */
+.btn-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid var(--border-dark);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    background var(--transition-fast),
+    transform var(--transition-fast);
+  overflow: hidden;
+}
+
+.btn-theme-toggle:hover {
+  color: var(--accent);
+  border-color: var(--accent-border);
+  background: var(--accent-subtle);
+}
+
+/* Icons sit on top of each other; CSS fades between them */
+.btn-theme-toggle .icon-sun,
+.btn-theme-toggle .icon-moon {
+  position: absolute;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+/* Light mode: show sun */
+.btn-theme-toggle .icon-sun  { opacity: 1; transform: scale(1) rotate(0deg); }
+.btn-theme-toggle .icon-moon { opacity: 0; transform: scale(0.4) rotate(-30deg); }
+
+/* Dark mode: show moon */
+body.dark-mode .btn-theme-toggle .icon-sun  { opacity: 0; transform: scale(0.4) rotate(30deg); }
+body.dark-mode .btn-theme-toggle .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+
+/* ─── DARK MODE NAV PILL ──────────────────────────────────────────────────── */
+body.dark-mode .nav-pill {
+  background: rgba(22, 27, 34, 0.94);
+  border-color: var(--border);
+}
+
+body.dark-mode .mobile-drawer {
+  background: rgba(13, 17, 23, 0.98);
+  border-color: var(--border);
+}
+
+body.dark-mode .rail-btn {
+  background-color: var(--bg-card);
+  border-color: var(--border);
+}
+
+body.dark-mode .rail-btn:hover {
+  background-color: var(--bg-elevated);
+}
+
+/* ─── DARK MODE CARDS & SURFACES ─────────────────────────────────────────── */
+body.dark-mode .about-narrative-card,
+body.dark-mode .about-attributes-wrap,
+body.dark-mode .hero-status-pill,
+body.dark-mode .hero-proof-bar,
+body.dark-mode .portrait-caption,
+body.dark-mode .portrait-photo-box,
+body.dark-mode .skill-group-card,
+body.dark-mode .contact-info-panel,
+body.dark-mode .contact-form-panel,
+body.dark-mode .resume-download-card,
+body.dark-mode .cert-editorial-card,
+body.dark-mode .analytics-mini-card,
+body.dark-mode .edu-block,
+body.dark-mode .exp-timeline-card,
+body.dark-mode .achievement-pill,
+body.dark-mode .resp-row,
+body.dark-mode .footer-colophon {
+  background-color: var(--bg-card);
+  border-color: var(--border);
+}
+
+body.dark-mode .attr-pill {
+  background-color: var(--bg-elevated);
+  border-color: var(--border);
+}
+
+body.dark-mode .principle-item {
+  border-color: var(--border);
+}
+
+body.dark-mode .skill-chip {
+  background-color: var(--bg-elevated);
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+
+body.dark-mode .skill-chip:hover {
+  background-color: var(--accent-subtle);
+  border-color: var(--accent-border);
+  color: var(--accent);
+}
+
+body.dark-mode .project-selector-rail {
+  background-color: var(--bg-alt);
+  border-color: var(--border);
+}
+
+body.dark-mode .project-nav-tab {
+  background-color: var(--bg-card);
+  border-color: var(--border);
+}
+
+body.dark-mode .project-nav-tab:hover,
+body.dark-mode .project-nav-tab.active {
+  background-color: var(--bg-elevated);
+  border-color: var(--accent-border);
+}
+
+body.dark-mode .project-stage-viewport,
+body.dark-mode .stage-frame {
+  background-color: var(--bg-card);
+  border-color: var(--border);
+}
+
+body.dark-mode .stage-frame-header {
+  background-color: var(--bg-elevated);
+  border-color: var(--border);
+}
+
+body.dark-mode .frame-url-bar {
+  background-color: var(--bg-alt);
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+
+body.dark-mode .code-visual-preview {
+  background-color: var(--bg-alt);
+  border-color: var(--border);
+}
+
+body.dark-mode .arch-box {
+  background-color: var(--bg-elevated);
+  border-color: var(--border);
+}
+
+body.dark-mode .arch-row {
+  border-color: var(--border);
+}
+
+body.dark-mode .spec-block {
+  border-color: var(--border);
+}
+
+body.dark-mode .pill-chip {
+  background-color: var(--bg-elevated);
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+
+body.dark-mode .cert-filter-btn {
+  background-color: var(--bg-card);
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+
+body.dark-mode .cert-filter-btn.active,
+body.dark-mode .cert-filter-btn:hover {
+  background-color: var(--accent-subtle);
+  border-color: var(--accent-border);
+  color: var(--accent);
+}
+
+body.dark-mode .cert-card-img-wrap {
+  background-color: var(--bg-elevated);
+}
+
+body.dark-mode .editorial-input,
+body.dark-mode .editorial-textarea {
+  background-color: var(--bg-elevated);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+body.dark-mode .editorial-input::placeholder,
+body.dark-mode .editorial-textarea::placeholder {
+  color: var(--text-subtle);
+}
+
+body.dark-mode .editorial-input:focus,
+body.dark-mode .editorial-textarea:focus {
+  border-color: var(--accent);
+  background-color: var(--bg-card);
+}
+
+body.dark-mode .coord-item {
+  border-color: var(--border);
+}
+
+body.dark-mode .coord-icon {
+  background-color: var(--bg-elevated);
+  border-color: var(--border);
+}
+
+body.dark-mode .c-social-btn {
+  background-color: var(--bg-elevated);
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+
+body.dark-mode .c-social-btn:hover {
+  background-color: var(--accent-subtle);
+  border-color: var(--accent-border);
+  color: var(--accent);
+}
+
+body.dark-mode .btn-nav-resume {
+  border-color: var(--border);
+  color: var(--text);
+}
+
+body.dark-mode .btn-nav-resume:hover {
+  background-color: var(--text);
+  color: var(--bg);
+}
+
+body.dark-mode .btn-ink-primary {
+  background-color: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+
+body.dark-mode .btn-ink-secondary {
+  color: var(--text);
+  border-color: var(--border-dark);
+}
+
+body.dark-mode .btn-stage-primary {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+body.dark-mode .btn-stage-secondary {
+  border-color: var(--border-dark);
+  color: var(--text-muted);
+}
+
+body.dark-mode .section-editorial {
+  border-bottom-color: var(--border);
+}
+
+body.dark-mode .section-editorial.section-alt {
+  background-color: var(--bg-alt);
+}
+
+body.dark-mode .hero-editorial {
+  border-bottom-color: var(--border);
+}
+
+body.dark-mode .tag-line {
+  background-color: var(--border-dark);
+}
+
+body.dark-mode .proof-item {
+  border-left-color: var(--border-dark);
+}
+
+body.dark-mode .hero-ink-underline path {
+  stroke: var(--accent);
+}
+
+body.dark-mode .editorial-loader {
+  background-color: var(--bg);
+}
+
+body.dark-mode .rail-line-top,
+body.dark-mode .rail-line-bottom {
+  background-color: var(--border-dark);
+}
+
+body.dark-mode .stage-meta-bar {
+  border-color: var(--border);
+}
+
+/* Cert modal */
+body.dark-mode .cert-modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+body.dark-mode .cert-modal-panel {
+  background-color: var(--bg-card);
+  border-color: var(--border);
+}
+
+body.dark-mode .cert-modal-header {
+  border-color: var(--border);
+}
+
+body.dark-mode .cert-modal-title {
+  color: var(--text);
+}
+
+body.dark-mode .cert-modal-meta {
+  color: var(--text-muted);
+}
+
+body.dark-mode .btn-modal-close {
+  background-color: var(--bg-elevated);
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+
+body.dark-mode .experience-block,
+body.dark-mode .exp-company-card {
+  background-color: var(--bg-card);
+  border-color: var(--border);
+}
+
+body.dark-mode .exp-timeline::before {
+  background-color: var(--border);
+}
+
+body.dark-mode .exp-dot {
+  background-color: var(--accent);
+  border-color: var(--bg-card);
+}
+
+body.dark-mode .edu-timeline::before {
+  background-color: var(--border);
+}
+
+body.dark-mode .edu-dot {
+  background-color: var(--accent);
+  border-color: var(--bg-card);
+}
+
+body.dark-mode .edu-block {
+  background-color: var(--bg-card);
+  border-color: var(--border);
+}
+
+body.dark-mode .coord-val {
+  color: var(--text);
+}
+
+/* Scrollbar in dark */
+body.dark-mode ::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+body.dark-mode ::-webkit-scrollbar-thumb {
+  background: var(--border-dark);
+}
+
+/* ─── Z-INDEX LAYER SAFETY ─────────────────────────────────────────────── */
+#atmosphere-bg    { z-index: 0; }
+nav.floating-pill-nav { z-index: 999; }
+#loader           { z-index: 10000; }
+#certModal        { z-index: 10001; }
+#backTop          { z-index: 900; }
+.hero-social-rail { z-index: 90; }
+
+/* Force sections above atmosphere */
+section,
+footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── SMOOTH SURFACE TRANSITIONS ON THEME SWITCH ────────────────────────── */
+.nav-pill,
+.mobile-drawer,
+.section-editorial,
+.about-narrative-card,
+.about-attributes-wrap,
+.attr-pill,
+.skill-group-card,
+.skill-chip,
+.project-nav-tab,
+.project-selector-rail,
+.project-stage-viewport,
+.stage-frame,
+.stage-frame-header,
+.cert-editorial-card,
+.cert-filter-btn,
+.editorial-input,
+.editorial-textarea,
+.contact-info-panel,
+.contact-form-panel,
+.coord-item,
+.coord-icon,
+.c-social-btn,
+.edu-block,
+.hero-proof-bar,
+.portrait-caption {
+  transition:
+    background-color 0.55s ease,
+    border-color 0.45s ease,
+    color 0.35s ease,
+    box-shadow 0.45s ease;
+}
+
+/* ─── PREFERS REDUCED MOTION ─────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .atm-orb,
+  .atm-particle,
+  body,
+  .nav-pill,
+  .mobile-drawer,
+  .btn-theme-toggle {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ─── MOBILE: SCALE DOWN ─────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .atm-orb-l1, .atm-orb-d1 { width: 220px; height: 220px; }
+  .atm-orb-l2, .atm-orb-d2 { width: 160px; height: 160px; }
+  .atm-orb-l3, .atm-orb-d3 { display: none; }
+}
